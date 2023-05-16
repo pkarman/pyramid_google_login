@@ -109,8 +109,10 @@ def callback(request):
         url = find_landing_path(request)
 
     user_logged_in = UserLoggedIn(request, userid, oauth2_token, userinfo)
+    log.debug("user_logged_in=%s", user_logged_in)
     try:
         request.registry.notify(user_logged_in)
+        log.debug("registry notified with user_logged_in")
     except Exception:
         log.exception('Application crashed processing UserLoggedIn event'
                       '\nuserinfo=%s oauth2_token=%s',
